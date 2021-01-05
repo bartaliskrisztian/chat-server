@@ -1,0 +1,3 @@
+﻿  TCPSysThread.cpp
+E:\Egyetem\V\Hálózatok\KonkurensTCPSzerver\KonkurensTCPSzerver\TCPSysThread.cpp(226,20): warning C4018: '<': signed/unsigned mismatch
+  KonkurensTCPSzerver.vcxproj -> E:\Egyetem\V\Hálózatok\KonkurensTCPSzerver\Debug\KonkurensTCPSzerver.exe
