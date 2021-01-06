@@ -25,6 +25,7 @@ public:
 	SOCKET getSocket();
 	virtual void run();
 	void sendEveryone(char*, int);
+	void privateSend(char*, int);
 	void clientConnected(char*);
 	void clientDisconnected();
 	void takenUsername();

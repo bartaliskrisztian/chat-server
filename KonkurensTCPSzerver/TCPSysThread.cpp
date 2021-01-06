@@ -94,6 +94,33 @@ void TCPSysThread::run() {
 				sendEveryone(recBuf, result);
 				break;
 			}
+			// privát küldés
+			case '5': {
+				std::string clientName = "";
+				std::string friendName = "";
+				std::string message = "";
+				int i, j, k;
+				for (i = 1; i < result; ++i) {
+					if (recBuf[i] == '^') {
+						++i;
+						break;
+					}
+					clientName += recBuf[i];
+				}
+				for (j = i; j < result; ++j) {
+					if (recBuf[j] == '^') {
+						++j;
+						break;
+					}
+					friendName += recBuf[j];
+				}
+				for (k = j; k < result; ++k) {
+					message += recBuf[k];
+				}
+				printf("%s -> %s: %s\n", clientName.c_str(), friendName.c_str(), message.c_str());
+				privateSend(recBuf, result);
+				break;
+			}
 		}
 	}
 }
@@ -124,7 +151,7 @@ void TCPSysThread::sendEveryone(char* recBuf, int dataLen) {
 	}
 }
 
-
+// amikor egy kliens csatlakozik, elküldjük mindenkinek a nevét
 void TCPSysThread::clientConnected(char* recBuf) {
 	
 	int dataLen = strlen(recBuf) + 1;
@@ -147,7 +174,7 @@ void TCPSysThread::clientConnected(char* recBuf) {
 	printf("'%s' csatlakozott\n", this->clientName.c_str());
 }
 
-
+// amikor egy kliens kilép, elküldjük mindenkinek a nevét
 void TCPSysThread::clientDisconnected() {
 
 	printf("'%s' kilepett.\n", clientName.c_str());
@@ -194,6 +221,7 @@ void TCPSysThread::clientDisconnected() {
 	closesocket(this->AcceptSocket);
 }
 
+// ha egy név foglalt, elküldjük a hibaüzenetet a kliensnek
 void TCPSysThread::takenUsername() {
 	char recBuf[50];
 	std::string message = "";
@@ -217,6 +245,7 @@ void TCPSysThread::takenUsername() {
 	LeaveCriticalSection(critical_section);
 }
 
+// amikor egy kliens csatlakozik, elküldjük neki a többi felhasználó neveit
 void TCPSysThread::sendClientList() {
 	char recBuf[1024];
 	std::string message = "";
@@ -238,4 +267,8 @@ void TCPSysThread::sendClientList() {
 	}
 	
 	LeaveCriticalSection(critical_section);
+}
+
+void TCPSysThread::privateSend(char* recBuf, int dataLen) {
+
 }
