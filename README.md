@@ -6,3 +6,4 @@
 * The server handles concurrent TCP connection with the clients
 * Uses winsockets
 * Depending on the received package type, the server processes it
+* Client side UI source code: https://github.com/bartaliskrisztian/chat-client
